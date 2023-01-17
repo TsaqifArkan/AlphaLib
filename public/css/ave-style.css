@@ -28,6 +28,14 @@
     background-color: #82AAE3;
 }
 
+.head-no {
+    max-width: 30px;
+}
+
+.head-aksi-kat {
+    max-width: 75px;
+}
+
 .head-aksi {
     min-width: 100px;
 }
