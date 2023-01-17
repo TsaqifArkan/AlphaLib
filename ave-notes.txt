@@ -1,0 +1,28 @@
+ABOUT BUTTON TRIGGER MODAL
+<!-- Button trigger modal -->
+<button type="button"
+    class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-bs-target="#modalTambahBuku">
+    <!-- it should using this line -->
+    <!-- data-bs-target="#modalTambahBuku" -->
+    <!-- but it will duplicate the modal pop ups, so using this line instead -->
+    <!-- data-bs-target="#formModalBuku" -->
+    <!-- plus we removed (take out) this line, so that the error doesn't occur -->
+    <!-- data-bs-toggle="modal" -->
+    <span class="me-1"><i class="fa-solid fa-fw fa-circle-plus"></i></span>
+    <span>Tambah Data Buku</span>
+</button>
+a) Following the guide on Bootstrap v5.1.3 Docs :
+<button type="button" class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalTambahBuku">
+>> BUT it gives an error, maybe cause using JQuery (JS)
+b) Following BSI Asset Code :
+<button type="button" class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#formModalBuku">
+>> BUT it gives an error too, plus modal won't showed up, maybe cause of using older version of Bootstrap
+c) Following BSI Asset Code but modified with Bootstrap v5.1.3 :
+<button type="button" class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#formModalBuku">
+>> Error still exist, even tho the modals will showed up.
+d) Following BSI Asset Code + mod v5.1.3 + refined like Guide :
+<button type="button" class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalTambahBuku">
+>> Error still occured, getting worse cause the modals ocassionally popped up 2 times (closing the first one will reveal the second one)
+e) FOUND SOLUTION ON STACKOVERFLOW! Link : https://stackoverflow.com/questions/69703179/cannot-read-property-classlist-of-undefined-in-modal-popup-bootstrap-5-1
+<button type="button" class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-bs-target="#modalTambahBuku">
+>> Removed the data-bs-toggle, so the error doesn't occur anymore. Plus giving the data-bs-target value to match with the modal's ID, so we can follow the Guide on Bootstrap Docs.

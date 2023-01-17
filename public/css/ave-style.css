@@ -1,0 +1,33 @@
+.bg-alphlib {
+    background-color: #0A2647;
+}
+
+.bg-main-alphlib {
+    background-color: #EEF1FF;
+}
+
+.sb-sidenav-dark {
+    background-color: #144272;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sb-topnav .navbar-brand {
+    width: 152px;
+    margin: 0;
+}
+
+.sb-sidenav-dark .sb-sidenav-footer {
+    background-color: #1C315E;
+}
+
+.fa-book {
+    color: aliceblue;
+}
+
+.ave-bg-th {
+    background-color: #82AAE3;
+}
+
+.head-aksi {
+    min-width: 100px;
+}
