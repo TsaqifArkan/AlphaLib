@@ -223,6 +223,16 @@ class Buku extends BaseController
             echo json_encode($msg);
         }
     }
+
+    public function detail($id = 0)
+    {
+        $data['title'] = 'Detail Buku';
+        $data['buku'] = $this->bukuModel->find($id);
+        if (empty($data['buku'])) {
+            return redirect()->to(base_url('buku'));
+        }
+        return view('buku/detail', $data);
+    }
 }
 
 ?>

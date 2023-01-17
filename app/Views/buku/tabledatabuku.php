@@ -8,7 +8,6 @@
                 <th class="text-uppercase fw-bold">Pengarang</th>
                 <th class="text-uppercase fw-bold">Penerbit</th>
                 <th class="text-uppercase fw-bold">Tempat Terbit</th>
-                <th class="text-uppercase fw-bold">Jumlah Halaman</th>
                 <th class="text-uppercase fw-bold">Tahun Terbit</th>
                 <th class="text-uppercase fw-bold head-aksi">Aksi</th>
             </tr>
@@ -22,11 +21,11 @@
                     <td><?= esc($data['pengarang']); ?></td>
                     <td><?= esc($data['penerbit']); ?></td>
                     <td><?= esc($data['tempatterbit']); ?></td>
-                    <td><?= esc($data['jmlhal']); ?></td>
                     <td><?= esc($data['thnterbit']); ?></td>
                     <td>
-                        <a href="#" class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Detail"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="<?= base_url('buku/detail') . '/' . esc($data['idbuku']); ?>" class="btn btn-info btn-sm"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i
+                                class="fa-solid fa-circle-info"></i></a>
                         <button class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="Edit" onclick="ubah('<?= esc($data['idbuku']); ?>')"><i
                                 class="fa-solid fa-pen-to-square"></i></button>
@@ -50,7 +49,7 @@
                     className: 'dt-head-center'
                 },
                 {
-                    targets: [0, 6, 7, 8],
+                    targets: [0, 5, 6, 7],
                     className: 'dt-body-center'
                 }
             ]
