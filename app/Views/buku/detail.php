@@ -12,6 +12,18 @@
                     <div class="container">
                         <div class="row">
                             <div class="col fw-bold text-center">
+                                Nomor Inventaris
+                            </div>
+                            <div class="col-1 fw-bold text-center">
+                                :
+                            </div>
+                            <div class="col m-auto">
+                                <?= esc($buku['noinvent']); ?>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col fw-bold text-center">
                                 Judul Buku
                             </div>
                             <div class="col-1 fw-bold text-center">
@@ -31,6 +43,18 @@
                             </div>
                             <div class="col m-auto">
                                 <?= esc($buku['isbn']); ?>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col fw-bold text-center">
+                                Klasifikasi Keilmuan
+                            </div>
+                            <div class="col-1 fw-bold text-center">
+                                :
+                            </div>
+                            <div class="col m-auto">
+                                <?= esc($buku['idklas']) ? ('(' . esc($klas['noklas']) . ') - ' . esc($klas['nama'])) : ' - ' ?>
                             </div>
                         </div>
                         <hr>
@@ -103,31 +127,6 @@
                             </div>
                             <div class="col m-auto">
                                 <?= esc($buku['jmleksemplar']); ?>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col fw-bold text-center">
-                                Nomor Inventaris
-                            </div>
-                            <div class="col-1 fw-bold text-center">
-                                :
-                            </div>
-                            <div class="col m-auto">
-                                <?= esc($buku['noinvent']); ?>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col fw-bold text-center">
-                                Klasifikasi Keilmuan
-                            </div>
-                            <div class="col-1 fw-bold text-center">
-                                :
-                            </div>
-                            <div class="col m-auto">
-                                <?php // echo esc($buku['noinvent']); ?>
-                                blom ada
                             </div>
                         </div>
                         <hr>

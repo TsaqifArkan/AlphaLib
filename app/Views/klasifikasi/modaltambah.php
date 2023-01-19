@@ -1,16 +1,22 @@
 <!-- Modal -->
-<div class="modal fade" id="modalTambahKategori" tabindex="-1" aria-labelledby="judulModalKategori" aria-hidden="true">
+<div class="modal fade" id="modalTambahKlasifikasi" tabindex="-1" aria-labelledby="judulModalKlasifikasi"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="judulModalKategori">Tambah Data Kategori</h1>
+                <h1 class="modal-title fs-5" id="judulModalKlasifikasi">Tambah Data Klasifikasi</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <?= form_open('kategori/tambah', ['class' => 'formKategori']); ?>
+            <?= form_open('klasifikasi/tambah', ['class' => 'formKlasifikasi']); ?>
             <div class="modal-body">
                 <?= csrf_field(); ?>
                 <div class="form-group mb-3">
-                    <label for="nama" class="form-label">Nama Kategori</label>
+                    <label for="noKlas" class="form-label">Nomor Klasifikasi</label>
+                    <input type="text" class="form-control" name="noKlas" id="noKlas">
+                    <div class="invalid-feedback errorNoKlas"></div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="nama" class="form-label">Nama Klasifikasi</label>
                     <input type="text" class="form-control" name="nama" id="nama">
                     <div class="invalid-feedback errorNama"></div>
                 </div>
@@ -24,12 +30,12 @@
     </div>
 </div>
 <script>
-    // Konfigurasi Modal Tambah Kategori di modaltambah.php
+    // Konfigurasi Modal Tambah Klasifikasi di modaltambah.php
     $(document).ready(function () {
-        $('#modalTambahKategori').on('shown.bs.modal', function () {
-            $('#nama').focus();
+        $('#modalTambahKlasifikasi').on('shown.bs.modal', function () {
+            $('#noKlas').focus();
         })
-        $('.formKategori').submit(function (e) {
+        $('.formKlasifikasi').submit(function (e) {
             e.preventDefault();
             $.ajax({
                 type: "POST",
@@ -47,6 +53,15 @@
                 success: function (response) {
                     if (response.error) {
 
+                        if (response.error.noKlas) {
+                            $('#noKlas').addClass('is-invalid');
+                            $('.errorNoKlas').html(response.error.noKlas);
+                        } else {
+                            $('#noKlas').removeClass('is-invalid');
+                            $('#noKlas').addClass('is-valid');
+                            $('.errorNoKlas').html('');
+                        }
+
                         if (response.error.nama) {
                             $('#nama').addClass('is-invalid');
                             $('.errorNama').html(response.error.nama);
@@ -62,8 +77,8 @@
                             title: 'SUCCESS !',
                             text: response.flashData
                         });
-                        $('#modalTambahKategori').modal('hide');
-                        tableKategori();
+                        $('#modalTambahKlasifikasi').modal('hide');
+                        tableKlasifikasi();
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

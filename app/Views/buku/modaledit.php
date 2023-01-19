@@ -11,6 +11,12 @@
                 <?= csrf_field(); ?>
                 <input type="hidden" name="id" id="id" value="<?= esc($buku['idbuku']); ?>">
                 <div class="form-group mb-3">
+                    <label for="noInvent" class="form-label">No. Inventaris</label>
+                    <input type="text" class="form-control" name="noInvent" id="noInvent"
+                        value="<?= esc($buku['noinvent']); ?>">
+                    <div class="invalid-feedback errorNoInvent"></div>
+                </div>
+                <div class="form-group mb-3">
                     <label for="judul" class="form-label">Judul</label>
                     <input type="text" class="form-control" name="judul" id="judul" value="<?= esc($buku['judul']); ?>">
                     <div class="invalid-feedback errorJudul"></div>
@@ -19,6 +25,18 @@
                     <label for="isbn" class="form-label">ISBN</label>
                     <input type="text" class="form-control" name="isbn" id="isbn" value="<?= esc($buku['isbn']); ?>">
                     <div class="invalid-feedback errorISBN"></div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="klasifikasi" class="form-label">Klasifikasi Keilmuan</label>
+                    <select class="form-select" id="klasifikasi" name="klasifikasi">
+                    <option value="" disabled <?=!isset($idkls) ? "selected" : ''; ?>>--Pilih Klasifikasi--</option>
+                        <?php foreach ($klas as $k): ?>
+                            <option value="<?= esc($k['idklasifikasi']); ?>"
+                            <?= (esc($k['idklasifikasi']) == $idkls) ? "selected" : '';?>
+                            >(<?= esc($k['noklas']); ?>) - <?= esc($k['nama']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div class="invalid-feedback errorKlasifikasi"></div>
                 </div>
                 <div class="form-group mb-3">
                     <label for="pengarang" class="form-label">Pengarang</label>
@@ -50,6 +68,18 @@
                         value="<?= esc($buku['thnterbit']); ?>">
                     <div class="invalid-feedback errorThnTerbit"></div>
                 </div>
+                <div class="form-group mb-3">
+                    <label for="jmlEks" class="form-label">Jumlah Eksemplar</label>
+                    <input type="number" class="form-control" name="jmlEks" id="jmlEks"
+                        value="<?= esc($buku['jmleksemplar']); ?>">
+                    <div class="invalid-feedback errorJmlEks"></div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="edisi" class="form-label">Edisi Cetakan</label>
+                    <input type="text" class="form-control" name="edisi" id="edisi"
+                        value="<?= esc($buku['edisicetak']); ?>">
+                    <div class="invalid-feedback errorEdisi"></div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -80,6 +110,15 @@
                 success: function (response) {
                     if (response.error) {
 
+                        if (response.error.noInvent) {
+                            $('#noInvent').addClass('is-invalid');
+                            $('.errorNoInvent').html(response.error.noInvent);
+                        } else {
+                            $('#noInvent').removeClass('is-invalid');
+                            $('#noInvent').addClass('is-valid');
+                            $('.errorNoInvent').html('');
+                        }
+
                         if (response.error.judul) {
                             $('#judul').addClass('is-invalid');
                             $('.errorJudul').html(response.error.judul);
@@ -96,6 +135,15 @@
                             $('#isbn').removeClass('is-invalid');
                             $('#isbn').addClass('is-valid');
                             $('.errorISBN').html('');
+                        }
+
+                        if (response.error.klasifikasi) {
+                            $('#klasifikasi').addClass('is-invalid');
+                            $('.errorKlasifikasi').html(response.error.klasifikasi);
+                        } else {
+                            $('#klasifikasi').removeClass('is-invalid');
+                            $('#klasifikasi').addClass('is-valid');
+                            $('.errorKlasifikasi').html('');
                         }
 
                         if (response.error.pengarang) {
@@ -141,6 +189,24 @@
                             $('#thnTerbit').removeClass('is-invalid');
                             $('#thnTerbit').addClass('is-valid');
                             $('.errorThnTerbit').html('');
+                        }
+
+                        if (response.error.jmlEks) {
+                            $('#jmlEks').addClass('is-invalid');
+                            $('.errorJmlEks').html(response.error.jmlEks);
+                        } else {
+                            $('#jmlEks').removeClass('is-invalid');
+                            $('#jmlEks').addClass('is-valid');
+                            $('.errorJmlEks').html('');
+                        }
+
+                        if (response.error.edisi) {
+                            $('#edisi').addClass('is-invalid');
+                            $('.errorEdisi').html(response.error.edisi);
+                        } else {
+                            $('#edisi').removeClass('is-invalid');
+                            $('#edisi').addClass('is-valid');
+                            $('.errorEdisi').html('');
                         }
 
                     } else {

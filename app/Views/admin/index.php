@@ -10,7 +10,7 @@
         <div class="col">
             <div class="p-5 mb-4 rounded-3 bg-jumbotron-ave">
                 <div class="container-fluid py-5">
-                    <h1 class="display-5 text-center">Assalamu'alaikum. Selamat <?= $greet; ?>, <?= esc($admindata['username']); ?> !</h1>
+                    <h1 class="display-5 text-center">Selamat <?= $greet; ?>, <?= esc($admindata['username']); ?> !</h1>
                     <hr class="my-4">
                     <div class="row justify-content-center">
                         <div class="card mb-3 shadow" style="width: 50%;">
@@ -53,10 +53,10 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col text-center">
-                                                    <a href="<?= base_url('user/editprofile/'); ?>"
-                                                        class="btn btn-warning">Edit Profile</a>
-                                                    <a href="<?= base_url('user/password/'); ?>"
-                                                        class="btn btn-secondary">Ubah Password</a>
+                                                    <button type="button" class="btn btn-warning" onclick="ubah()">Edit
+                                                        Profil</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        onclick="password()">Ubah Password</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -70,5 +70,49 @@
         </div>
     </div>
 </div>
+<div class="viewModalAdmin" style="display: none;"></div>
+<script>
+    // Konfigurasi Tombol Edit Profil
+    function ubah() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('admin/formedit'); ?>",
+            dataType: "JSON",
+            success: function (response) {
+                if (response.data) {
+                    $('.viewModalAdmin').html(response.data).show();
+                    $('#modalEditProfil').modal('show');
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                // alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                var tab = window.open('about:blank', '_blank');
+                tab.document.write(xhr.responseText); // where 'html' is a variable containing your HTML
+                tab.document.close(); // to finish loading the page
+            }
+        });
+    }
+
+    // Konfigurasi Tombol Ubah Password
+    function password() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('admin/formpass'); ?>",
+            dataType: "JSON",
+            success: function (response) {
+                if (response.data) {
+                    $('.viewModalAdmin').html(response.data).show();
+                    $('#modalUbahPass').modal('show');
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                // alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                var tab = window.open('about:blank', '_blank');
+                tab.document.write(xhr.responseText); // where 'html' is a variable containing your HTML
+                tab.document.close(); // to finish loading the page
+            }
+        });
+    }
+</script>
 
 <?= $this->endSection(); ?>

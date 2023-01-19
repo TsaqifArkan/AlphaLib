@@ -2,29 +2,29 @@
 
 namespace App\Controllers;
 
-use App\Models\KategoriModel;
+use App\Models\KlasifikasiModel;
 
-class Kategori extends BaseController
+class Klasifikasi extends BaseController
 {
-    protected $kategoriModel, $db, $builder;
+    protected $klasifikasiModel, $db, $builder;
 
     public function __construct()
     {
-        $this->kategoriModel = new KategoriModel();
+        $this->klasifikasiModel = new KlasifikasiModel();
         $this->db = \Config\Database::connect();
-        $this->builder = $this->db->table('kategori');
+        $this->builder = $this->db->table('klasifikasi');
     }
 
     public function index()
     {
-        $data['title'] = 'Kategori';
-        return view('kategori/index', $data);
+        $data['title'] = 'Klasifikasi';
+        return view('klasifikasi/index', $data);
     }
     public function getData()
     {
         if ($this->request->isAJAX()) {
-            $data['datas'] = $this->kategoriModel->findAll();
-            $msg['data'] = view('kategori/tablekategori', $data);
+            $data['datas'] = $this->klasifikasiModel->findAll();
+            $msg['data'] = view('klasifikasi/tableklasifikasi', $data);
             echo json_encode($msg);
         }
     }
@@ -32,7 +32,7 @@ class Kategori extends BaseController
     public function formTambah()
     {
         if ($this->request->isAJAX()) {
-            $msg['data'] = view('kategori/modaltambah');
+            $msg['data'] = view('klasifikasi/modaltambah');
             echo json_encode($msg);
         }
     }
@@ -41,8 +41,15 @@ class Kategori extends BaseController
     {
         if ($this->request->isAJAX()) {
             $valid = $this->validate([
+                'noKlas' => [
+                    'label' => 'Nomor Klasifikasi',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong!'
+                    ]
+                ],
                 'nama' => [
-                    'label' => 'Nama Kategori',
+                    'label' => 'Nama Klasifikasi',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong!'
@@ -52,16 +59,18 @@ class Kategori extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
+                        'noKlas' => $this->validation->getError('noKlas'),
                         'nama' => $this->validation->getError('nama')
                     ]
                 ];
             } else {
                 // Insert ke DB
                 $inputData = [
+                    'noklas' => $this->request->getPost('noKlas'),
                     'nama' => $this->request->getPost('nama')
                 ];
-                $this->kategoriModel->insert($inputData);
-                $msg['flashData'] = 'Data kategori berhasil ditambahkan.';
+                $this->klasifikasiModel->insert($inputData);
+                $msg['flashData'] = 'Data klasifikasi berhasil ditambahkan.';
             }
             echo json_encode($msg);
         }
@@ -71,8 +80,8 @@ class Kategori extends BaseController
     {
         if ($this->request->isAJAX()) {
             $id = $this->request->getPost('id');
-            $data['kategori'] = $this->kategoriModel->find($id);
-            $msg['data'] = view('kategori/modaledit', $data);
+            $data['klasifikasi'] = $this->klasifikasiModel->find($id);
+            $msg['data'] = view('klasifikasi/modaledit', $data);
             echo json_encode($msg);
         }
     }
@@ -82,8 +91,15 @@ class Kategori extends BaseController
         if ($this->request->isAJAX()) {
             $id = $this->request->getPost('id');
             $valid = $this->validate([
+                'noKlas' => [
+                    'label' => 'Nomor Klasifikasi',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} tidak boleh kosong!'
+                    ]
+                ],
                 'nama' => [
-                    'label' => 'Nama Kategori',
+                    'label' => 'Nama Klasifikasi',
                     'rules' => 'required',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong!'
@@ -93,15 +109,17 @@ class Kategori extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
+                        'noKlas' => $this->validation->getError('noKlas'),
                         'nama' => $this->validation->getError('nama')
                     ]
                 ];
             } else {
                 $updatedData = [
+                    'noklas' => $this->request->getPost('noKlas'),
                     'nama' => $this->request->getPost('nama')
                 ];
-                $this->kategoriModel->update($id, $updatedData);
-                $msg['flashData'] = 'Data kategori berhasil diupdate.';
+                $this->klasifikasiModel->update($id, $updatedData);
+                $msg['flashData'] = 'Data klasifikasi berhasil diupdate.';
             }
             echo json_encode($msg);
         }
@@ -112,8 +130,8 @@ class Kategori extends BaseController
         if ($this->request->isAJAX()) {
             $id = $this->request->getPost('id');
             // Delete 1 row data
-            $this->kategoriModel->delete($id);
-            $msg['flashData'] = 'Data kategori berhasil dihapus.';
+            $this->klasifikasiModel->delete($id);
+            $msg['flashData'] = 'Data klasifikasi berhasil dihapus.';
             echo json_encode($msg);
         }
     }

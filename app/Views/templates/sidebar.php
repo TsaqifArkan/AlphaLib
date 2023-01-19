@@ -12,7 +12,7 @@ function url($needle)
                 <div class="sb-sidenav-menu-heading">Admin Page</div>
                 <a class="nav-link <?=(substr(uri_string(), 0, strlen('admin')) === 'admin' || uri_string() === '/' ? 'active' : '') ?>"
                     href="<?= base_url('admin'); ?>">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-fw fa-book-open"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-fw fa-user"></i></div>
                     Profil Admin
                 </a>
                 <div class="sb-sidenav-menu-heading">Database</div>
@@ -20,19 +20,15 @@ function url($needle)
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-fw fa-book-open"></i></div>
                     Buku
                 </a>
-                <a class="nav-link <?= url('kategori'); ?>" href="<?= base_url('kategori'); ?>">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-fw fa-book-open"></i></div>
-                    Kategori
-                </a>
-                <a class="nav-link" href="/">
-                    <div class="sb-nav-link-icon"><i class="fas fa-fw fa-tachometer-alt"></i></div>
-                    Blank Document
+                <a class="nav-link <?= url('klasifikasi'); ?>" href="<?= base_url('klasifikasi'); ?>">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-fw fa-rectangle-list"></i></div>
+                    Klasifikasi
                 </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Admin
+            <?= session('admin_session.uname'); ?>
         </div>
     </nav>
 </div>

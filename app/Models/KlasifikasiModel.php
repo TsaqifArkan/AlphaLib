@@ -4,13 +4,13 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KategoriModel extends Model
+class KlasifikasiModel extends Model
 {
-    protected $table = 'kategori';
-    protected $primaryKey = 'idkategori';
+    protected $table = 'klasifikasi';
+    protected $primaryKey = 'idklasifikasi';
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
-    protected $allowedFields = ['nama'];
+    protected $allowedFields = ['noklas', 'nama'];
     protected $useTimestamps = true;
     protected $dateFormat = 'date';
     protected $createdField = '';

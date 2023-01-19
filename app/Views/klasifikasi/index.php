@@ -8,7 +8,7 @@
     <!-- Page Heading -->
     <div class="row my-2">
         <div class="col">
-            <h1 class="h3 text-gray-800">Daftar Kategori Keilmuan</h1>
+            <h1 class="h3 text-gray-800">Daftar Klasifikasi Keilmuan</h1>
         </div>
     </div>
 
@@ -16,10 +16,10 @@
         <div class="col">
             <!-- Button trigger modal -->
             <button type="button"
-                class="btn btn-success tombolTambahKategori d-flex justify-content-between align-items-center"
-                data-bs-target="#modalTambahKategori">
+                class="btn btn-success tombolTambahKlasifikasi d-flex justify-content-between align-items-center"
+                data-bs-target="#modalTambahKlasifikasi">
                 <span class="me-1"><i class="fa-solid fa-fw fa-circle-plus"></i></span>
-                <span>Tambah Data Kategori</span>
+                <span>Tambah Data Klasifikasi</span>
             </button>
         </div>
     </div>
@@ -28,10 +28,10 @@
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-2">
-                    <h6 class="m-1 fw-bold text-uppercase">Tabel Kategori</h6>
+                    <h6 class="m-1 fw-bold text-uppercase">Tabel Klasifikasi</h6>
                 </div>
                 <div class="card-body">
-                    <div class="sectiondatakategori">
+                    <div class="sectiondataklasifikasi">
 
                     </div>
                 </div>
@@ -39,15 +39,15 @@
         </div>
     </div>
 </div>
-<div class="viewModalKategori" style="display: none;"></div>
+<div class="viewModalKlasifikasi" style="display: none;"></div>
 
 <script>
-    function tableKategori() {
+    function tableKlasifikasi() {
         $.ajax({
-            url: "<?= base_url('kategori/getData'); ?>",
+            url: "<?= base_url('klasifikasi/getData'); ?>",
             dataType: "JSON",
             success: function (response) {
-                $('.sectiondatakategori').html(response.data);
+                $('.sectiondataklasifikasi').html(response.data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 // alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
@@ -58,17 +58,17 @@
         });
     }
 
-    // Konfigurasi Modal Tambah Kategori di index.php (kategori)
+    // Konfigurasi Modal Tambah Klasifikasi di index.php (klasifikasi)
     $(document).ready(function () {
-        tableKategori();
-        $('.tombolTambahKategori').click(function (e) {
+        tableKlasifikasi();
+        $('.tombolTambahKlasifikasi').click(function (e) {
             e.preventDefault();
             $.ajax({
-                url: "<?= base_url('kategori/formtambah'); ?>",
+                url: "<?= base_url('klasifikasi/formtambah'); ?>",
                 dataType: "JSON",
                 success: function (response) {
-                    $('.viewModalKategori').html(response.data).show();
-                    $('#modalTambahKategori').modal('show');
+                    $('.viewModalKlasifikasi').html(response.data).show();
+                    $('#modalTambahKlasifikasi').modal('show');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     // alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);

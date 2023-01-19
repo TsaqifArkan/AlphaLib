@@ -1,23 +1,25 @@
 <div class="table-responsive">
-    <table class="table table-bordered table-hover" id="dataTable-Kategori">
+    <table class="table table-bordered table-hover" id="dataTable-Klasifikasi">
         <thead class="ave-bg-th">
             <tr>
                 <th class="text-uppercase fw-bold head-no">No</th>
-                <th class="text-uppercase fw-bold">Nama Kategori</th>
-                <th class="text-uppercase fw-bold head-aksi-kat">Aksi</th>
+                <th class="text-uppercase fw-bold">Nomor Klasifikasi</th>
+                <th class="text-uppercase fw-bold">Nama Klasifikasi</th>
+                <th class="text-uppercase fw-bold head-aksi-klas">Aksi</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($datas as $i => $data): ?>
                 <tr>
                     <td><?= $i + 1; ?></td>
+                    <td><?= esc($data['noklas']); ?></td>
                     <td><?= esc($data['nama']); ?></td>
                     <td>
                         <button class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Edit" onclick="ubah('<?= esc($data['idkategori']); ?>')"><i
+                            title="Edit" onclick="ubah('<?= esc($data['idklasifikasi']); ?>')"><i
                                 class="fa-solid fa-pen-to-square"></i></button>
                         <button class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Hapus" onclick="hapus('<?= esc($data['idkategori']); ?>')"><i
+                            title="Hapus" onclick="hapus('<?= esc($data['idklasifikasi']); ?>')"><i
                                 class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
@@ -27,7 +29,7 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#dataTable-Kategori').DataTable({
+        $('#dataTable-Klasifikasi').DataTable({
             "pageLength": 25,
             "columnDefs": [
                 {
@@ -35,7 +37,8 @@
                     className: 'dt-head-center'
                 },
                 {
-                    targets: [0, 2],
+                    // targets: [0, 2],
+                    targets: "_all",
                     className: 'dt-body-center'
                 }
             ]
@@ -46,15 +49,15 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('kategori/formedit'); ?>",
+            url: "<?= base_url('klasifikasi/formedit'); ?>",
             data: {
                 id: id
             },
             dataType: "JSON",
             success: function (response) {
                 if (response.data) {
-                    $('.viewModalKategori').html(response.data).show();
-                    $('#modalEditKategori').modal('show');
+                    $('.viewModalKlasifikasi').html(response.data).show();
+                    $('#modalEditKlasifikasi').modal('show');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -80,7 +83,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('kategori/delete'); ?>",
+                    url: "<?= base_url('klasifikasi/delete'); ?>",
                     data: {
                         id: id
                     },
@@ -92,7 +95,7 @@
                                 title: 'SUCCESS !',
                                 text: response.flashData
                             })
-                            tableKategori();
+                            tableKlasifikasi();
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {

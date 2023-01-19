@@ -1,19 +1,26 @@
 <!-- Modal -->
-<div class="modal fade" id="modalEditKategori" tabindex="-1" aria-labelledby="judulModalKategori" aria-hidden="true">
+<div class="modal fade" id="modalEditKlasifikasi" tabindex="-1" aria-labelledby="judulModalKlasifikasi"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="judulModalKategori">Edit Data Kategori</h1>
+                <h1 class="modal-title fs-5" id="judulModalKlasifikasi">Edit Data Klasifikasi</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <?= form_open('kategori/edit', ['class' => 'formKategori']); ?>
+            <?= form_open('klasifikasi/edit', ['class' => 'formKlasifikasi']); ?>
             <div class="modal-body">
                 <?= csrf_field(); ?>
-                <input type="hidden" name="id" id="id" value="<?= esc($kategori['idkategori']); ?>">
+                <input type="hidden" name="id" id="id" value="<?= esc($klasifikasi['idklasifikasi']); ?>">
                 <div class="form-group mb-3">
-                    <label for="nama" class="form-label">Nama Kategori</label>
+                    <label for="noKlas" class="form-label">Nomor Klasifikasi</label>
+                    <input type="text" class="form-control" name="noKlas" id="noKlas"
+                        value="<?= esc($klasifikasi['noklas']); ?>">
+                    <div class="invalid-feedback errorNoKlas"></div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="nama" class="form-label">Nama Klasifikasi</label>
                     <input type="text" class="form-control" name="nama" id="nama"
-                        value="<?= esc($kategori['nama']); ?>">
+                        value="<?= esc($klasifikasi['nama']); ?>">
                     <div class="invalid-feedback errorNama"></div>
                 </div>
             </div>
@@ -26,9 +33,9 @@
     </div>
 </div>
 <script>
-    // Konfigurasi Modal Edit Kategori di modaledit.php
+    // Konfigurasi Modal Edit Klasifikasi di modaledit.php
     $(document).ready(function () {
-        $('.formKategori').submit(function (e) {
+        $('.formKlasifikasi').submit(function (e) {
             e.preventDefault();
             $.ajax({
                 type: "POST",
@@ -46,6 +53,15 @@
                 success: function (response) {
                     if (response.error) {
 
+                        if (response.error.noKlas) {
+                            $('#noKlas').addClass('is-invalid');
+                            $('.errorNoKlas').html(response.error.noKlas);
+                        } else {
+                            $('#noKlas').removeClass('is-invalid');
+                            $('#noKlas').addClass('is-valid');
+                            $('.errorNoKlas').html('');
+                        }
+
                         if (response.error.nama) {
                             $('#nama').addClass('is-invalid');
                             $('.errorNama').html(response.error.nama);
@@ -61,8 +77,8 @@
                             title: 'SUCCESS !',
                             text: response.flashData
                         });
-                        $('#modalEditKategori').modal('hide');
-                        tableKategori();
+                        $('#modalEditKlasifikasi').modal('hide');
+                        tableKlasifikasi();
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

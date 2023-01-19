@@ -40,10 +40,15 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <?= $this->include('templates/footer') ?>
+            <?= $this->include('templates/footer'); ?>
             <!-- End of Footer -->
         </div>
     </div>
+
+    <!-- Logout Modal-->
+    <?= $this->include('auth/logout'); ?>
+    <!-- End of Logout Modal -->
+
     <!-- Bootstrap core JavaScript-->
     <script src="<?= base_url(); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- JS from Template -->
