@@ -46,14 +46,20 @@ class Buku extends BaseController
     public function tambah()
     {
         if ($this->request->isAJAX()) {
+            // $a = "SD1/1";
+            // $b = explode(' - ', $a);
+            // $c = in_array('SD1/1', $b);
+            // dd($c);
+            // $query = $this->bukuModel->updNoInv(1, true);
+            // dd($query);
             $valid = $this->validate([
-                'noInvent' => [
-                    'label' => 'Nomor Inventaris',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => NOT_NULL
-                    ]
-                ],
+                // 'noInvent' => [
+                //     'label' => 'Nomor Inventaris',
+                //     'rules' => 'required',
+                //     'errors' => [
+                //         'required' => NOT_NULL
+                //     ]
+                // ],
                 'judul' => [
                     'label' => 'Judul Buku',
                     'rules' => 'required',
@@ -112,9 +118,10 @@ class Buku extends BaseController
                 ],
                 'jmlEks' => [
                     'label' => 'Jumlah Eksemplar',
-                    'rules' => 'required',
+                    'rules' => 'required|is_natural_no_zero',
                     'errors' => [
-                        'required' => NOT_NULL
+                        'required' => NOT_NULL,
+                        'is_natural_no_zero' => 'Buku minimal berjumlah 1!'
                     ]
                 ],
                 'edisi' => [
@@ -128,7 +135,7 @@ class Buku extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
-                        'noInvent' => $this->validation->getError('noInvent'),
+                        // 'noInvent' => $this->validation->getError('noInvent'),
                         'judul' => $this->validation->getError('judul'),
                         'isbn' => $this->validation->getError('isbn'),
                         'klasifikasi' => $this->validation->getError('klasifikasi'),
@@ -142,9 +149,38 @@ class Buku extends BaseController
                     ]
                 ];
             } else {
+                // Getting Last No Invent
+                // Cond 1. When there's data in it
+                $lastID = $this->bukuModel->builder()->selectMax('idbuku')->get()->getResultArray()[0]['idbuku'];
+                // Cond 2. Try using query builder so we can get a zero value (no need to initialize a model first)
+                // $query = $this->db->query("SELECT MAX(idbuku) FROM buku_copy")->getResultArray()[0];
+                // $lastID = $query['MAX(idbuku)'];
+                // Checking whether its the first input value or not
+                if (!isset($lastID) || ($lastID == '')) {
+                    $lastNo = '0';
+                } else {
+                    $lastData = $this->bukuModel->builder()->select('noinvent,jmleksemplar')->where('idbuku', $lastID)->get()->getResultArray()[0];
+                    if ($lastData['jmleksemplar'] > 1) {
+                        $firstExp = explode(' - ', $lastData['noinvent']);
+                        $scnExp = explode('/', $firstExp[1]);
+                        $lastNo = $scnExp[1];
+                    } else {
+                        $firstExp = explode('/', $lastData['noinvent']);
+                        $lastNo = $firstExp[1];
+                    }
+                }
+                // Creating No Invent
+                $jml = $this->request->getPost('jmlEks');
+                if ($jml > 1) {
+                    $noInv = "SD1/" . strval(intval($lastNo) + 1) . ' - ' . "SD1/" . strval(intval($lastNo) + intval($jml));
+                } else {
+                    $noInv = "SD1/" . strval(intval($lastNo) + 1);
+                }
+
                 // Insert ke DB
                 $inputData = [
-                    'noinvent' => $this->request->getPost('noInvent'),
+                    // 'noinvent' => $this->request->getPost('noInvent'),
+                    'noinvent' => $noInv,
                     'judul' => $this->request->getPost('judul'),
                     'isbn' => $this->request->getPost('isbn'),
                     'idklas' => $this->request->getPost('klasifikasi'),
@@ -178,15 +214,14 @@ class Buku extends BaseController
     public function edit()
     {
         if ($this->request->isAJAX()) {
-            $id = $this->request->getPost('id');
             $valid = $this->validate([
-                'noInvent' => [
-                    'label' => 'Nomor Inventaris',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => NOT_NULL
-                    ]
-                ],
+                // 'noInvent' => [
+                //     'label' => 'Nomor Inventaris',
+                //     'rules' => 'required',
+                //     'errors' => [
+                //         'required' => NOT_NULL
+                //     ]
+                // ],
                 'judul' => [
                     'label' => 'Judul Buku',
                     'rules' => 'required',
@@ -245,9 +280,10 @@ class Buku extends BaseController
                 ],
                 'jmlEks' => [
                     'label' => 'Jumlah Eksemplar',
-                    'rules' => 'required',
+                    'rules' => 'required|is_natural_no_zero',
                     'errors' => [
-                        'required' => NOT_NULL
+                        'required' => NOT_NULL,
+                        'is_natural_no_zero' => 'Buku minimal berjumlah 1!'
                     ]
                 ],
                 'edisi' => [
@@ -261,7 +297,7 @@ class Buku extends BaseController
             if (!$valid) {
                 $msg = [
                     'error' => [
-                        'noInvent' => $this->validation->getError('noInvent'),
+                        // 'noInvent' => $this->validation->getError('noInvent'),
                         'judul' => $this->validation->getError('judul'),
                         'isbn' => $this->validation->getError('isbn'),
                         'klasifikasi' => $this->validation->getError('klasifikasi'),
@@ -275,8 +311,15 @@ class Buku extends BaseController
                     ]
                 ];
             } else {
+                // This block of code intentionally i moved over here for additional increase of performance even tho just a bit
+                // Get Data from HTML POST
+                $id = $this->request->getPost('id');
+                $postJmlEks = $this->request->getPost('jmlEks');
+                // Get Data from DB
+                $dataDB = $this->bukuModel->builder()->select('jmleksemplar, noinvent')->where('idbuku', $id)->get()->getResultArray()[0];
+
                 $updatedData = [
-                    'noinvent' => $this->request->getPost('noInvent'),
+                    // 'noinvent' => $this->request->getPost('noInvent'),
                     'judul' => $this->request->getPost('judul'),
                     'isbn' => $this->request->getPost('isbn'),
                     'idklas' => $this->request->getPost('klasifikasi'),
@@ -289,6 +332,14 @@ class Buku extends BaseController
                     'edisicetak' => $this->request->getPost('edisi')
                 ];
                 $this->bukuModel->update($id, $updatedData);
+
+                // Configuration No Inventaris
+                if ($postJmlEks != $dataDB['jmleksemplar']) {
+                    $arrExp = explode(' - ', $dataDB['noinvent']);
+                    $boolArr = in_array('SD1/1', $arrExp);
+                    $this->bukuModel->updNoInv($id, $boolArr);
+                }
+
                 $msg['flashData'] = 'Data buku berhasil diupdate.';
             }
             echo json_encode($msg);

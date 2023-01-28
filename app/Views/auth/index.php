@@ -68,7 +68,8 @@
                                 <div class="form-floating mb-3">
                                     <input
                                         class="form-control <?php if (session('errors.password')): ?>is-invalid<?php endif; ?>"
-                                        id="password" name="password" type="password" placeholder="Password">
+                                        id="password" name="password" type="password" placeholder="Password"
+                                        autocomplete>
                                     <label for="inputPassword" class="fw-normal">Password</label>
                                     <div class="invalid-feedback">
                                         <?= session('errors.password'); ?>
@@ -89,7 +90,7 @@
     <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
     <?= $this->include('auth/footer'); ?>
     <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-    <!--   Core JS Files   -->
+    <!-- Core JS Files -->
     <script src="<?= base_url(); ?>/js/core/popper.min.js"></script>
     <script src="<?= base_url(); ?>/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="<?= base_url(); ?>/js/plugins/perfect-scrollbar.min.js"></script>

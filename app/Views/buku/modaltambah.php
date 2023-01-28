@@ -9,11 +9,11 @@
       <?= form_open('buku/tambah', ['class' => 'formBuku']); ?>
       <div class="modal-body">
         <?= csrf_field(); ?>
-        <div class="form-group mb-3">
+        <!-- <div class="form-group mb-3">
           <label for="noInvent" class="form-label">No. Inventaris</label>
-          <input type="text" class="form-control" name="noInvent" id="noInvent">
+          <input type="text" class="form-control" name="noInvent" id="noInvent" placeholder="SD1/XX - SD1/XX">
           <div class="invalid-feedback errorNoInvent"></div>
-        </div>
+        </div> -->
         <div class="form-group mb-3">
           <label for="judul" class="form-label">Judul</label>
           <input type="text" class="form-control" name="judul" id="judul">
@@ -67,7 +67,7 @@
         </div>
         <div class="form-group mb-3">
           <label for="edisi" class="form-label">Edisi Cetakan</label>
-          <input type="text" class="form-control" name="edisi" id="edisi">
+          <input type="text" class="form-control" name="edisi" id="edisi" placeholder="ex: Pertama">
           <div class="invalid-feedback errorEdisi"></div>
         </div>
       </div>
@@ -83,7 +83,8 @@
   // Konfigurasi Modal Tambah Buku di modaltambah.php
   $(document).ready(function () {
     $('#modalTambahBuku').on('shown.bs.modal', function () {
-      $('#noInvent').focus();
+      // $('#noInvent').focus();
+      $('#judul').focus();
     })
     $('.formBuku').submit(function (e) {
       e.preventDefault();
@@ -103,14 +104,14 @@
         success: function (response) {
           if (response.error) {
 
-            if (response.error.noInvent) {
-              $('#noInvent').addClass('is-invalid');
-              $('.errorNoInvent').html(response.error.noInvent);
-            } else {
-              $('#noInvent').removeClass('is-invalid');
-              $('#noInvent').addClass('is-valid');
-              $('.errorNoInvent').html('');
-            }
+            // if (response.error.noInvent) {
+            //   $('#noInvent').addClass('is-invalid');
+            //   $('.errorNoInvent').html(response.error.noInvent);
+            // } else {
+            //   $('#noInvent').removeClass('is-invalid');
+            //   $('#noInvent').addClass('is-valid');
+            //   $('.errorNoInvent').html('');
+            // }
 
             if (response.error.judul) {
               $('#judul').addClass('is-invalid');

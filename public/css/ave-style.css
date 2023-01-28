@@ -85,6 +85,10 @@
     min-width: 100px;
 }
 
+.alert-breadcrumb-ave {
+	background-color: #ECECEC;
+}
+
 /* Profile Card Layout for USER */
 .bg-jumbotron-ave {
     background-color: #E3F6FF;

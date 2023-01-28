@@ -26,3 +26,35 @@ d) Following BSI Asset Code + mod v5.1.3 + refined like Guide :
 e) FOUND SOLUTION ON STACKOVERFLOW! Link : https://stackoverflow.com/questions/69703179/cannot-read-property-classlist-of-undefined-in-modal-popup-bootstrap-5-1
 <button type="button" class="btn btn-success tombolTambahBuku d-flex justify-content-between align-items-center" data-bs-target="#modalTambahBuku">
 >> Removed the data-bs-toggle, so the error doesn't occur anymore. Plus giving the data-bs-target value to match with the modal's ID, so we can follow the Guide on Bootstrap Docs.
+
+
+ABOUT GENERATING NOINVENT WHEN INSERTING A DATA ON BUKU.PHP
+(this block of code just for a backup, last update before right now used in Buku.php)
+// Getting Last No Invent
+$lastID = $this->bukuModel->builder()->selectMax('idbuku')->get()->getResultArray()[0];
+if (isset($lastID) && ($lastID != '')) {
+    $lastData = $this->bukuModel->builder()->select('noinvent,jmleksemplar')->where('idbuku', $lastID)->get()->getResultArray()[0];
+    if ($lastData['jmleksemplar'] > 1) {
+        $firstExp = explode(' - ', $lastData['noinvent']);
+        $scnExp = explode('/', $firstExp[1]);
+        $lastNo = $scnExp[1];
+    } else {
+        $firstExp = explode('/', $lastData['noinvent']);
+        $lastNo = $firstExp[1];
+    }
+    // Creating No Invent
+    $jml = $this->request->getPost('jmlEks');
+    if ($jml > 1) {
+        $noInv = "SD1/" . strval(intval($lastNo) + 1) . ' - ' . "SD1/" . strval(intval($lastNo) + intval($jml));
+    } else {
+        $noInv = "SD1/" . strval(intval($lastNo) + 1);
+    }
+} else {
+    // Creating No Invent
+    $jml = $this->request->getPost('jmlEks');
+    if ($jml > 1) {
+        $noInv = "SD1/" . strval(1) . ' - ' . "SD1/" . strval(intval($jml));
+    } else {
+        $noInv = "SD1/" . strval(1);
+    }
+}

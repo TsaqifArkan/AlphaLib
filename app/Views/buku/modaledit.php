@@ -10,12 +10,12 @@
             <div class="modal-body">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="id" id="id" value="<?= esc($buku['idbuku']); ?>">
-                <div class="form-group mb-3">
+                <!-- <div class="form-group mb-3">
                     <label for="noInvent" class="form-label">No. Inventaris</label>
                     <input type="text" class="form-control" name="noInvent" id="noInvent"
-                        value="<?= esc($buku['noinvent']); ?>">
+                        value="<?php // echo esc($buku['noinvent']); ?>">
                     <div class="invalid-feedback errorNoInvent"></div>
-                </div>
+                </div> -->
                 <div class="form-group mb-3">
                     <label for="judul" class="form-label">Judul</label>
                     <input type="text" class="form-control" name="judul" id="judul" value="<?= esc($buku['judul']); ?>">

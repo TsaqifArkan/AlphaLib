@@ -5,7 +5,7 @@
                 <th class="text-uppercase fw-bold head-no">No</th>
                 <th class="text-uppercase fw-bold">Nomor Klasifikasi</th>
                 <th class="text-uppercase fw-bold">Nama Klasifikasi</th>
-                <th class="text-uppercase fw-bold head-aksi-klas">Aksi</th>
+                <th class="text-uppercase fw-bold head-aksi">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +15,9 @@
                     <td><?= esc($data['noklas']); ?></td>
                     <td><?= esc($data['nama']); ?></td>
                     <td>
+                        <a href="<?= base_url('klasifikasi/detail') . '/' . esc($data['idklasifikasi']); ?>"
+                            class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Detail"><i class="fa-solid fa-circle-info"></i></a>
                         <button class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="Edit" onclick="ubah('<?= esc($data['idklasifikasi']); ?>')"><i
                                 class="fa-solid fa-pen-to-square"></i></button>

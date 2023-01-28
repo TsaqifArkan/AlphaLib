@@ -3,6 +3,18 @@
 
 <?php //echo dd($datas); ?>
 
+<div class="row my-3 mx-1">
+    <div class="col pb-0">
+        <div class="alert alert-breadcrumb-ave mb-0" role="alert">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 fs-6">
+                    <li class="breadcrumb-item active" aria-current="page">Klasifikasi</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
 
     <!-- Page Heading -->

@@ -41,7 +41,7 @@
 <script>
     $(document).ready(function () {
         $('#dataTable-Buku').DataTable({
-            "pageLength": 25,
+            "pageLength": 50,
             "columnDefs": [
                 {
                     // targets: [0, 1, 2, 3, 4, 5, 6, 7],

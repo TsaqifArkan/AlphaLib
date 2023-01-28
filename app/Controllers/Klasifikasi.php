@@ -2,17 +2,19 @@
 
 namespace App\Controllers;
 
+use App\Models\BukuModel;
 use App\Models\KlasifikasiModel;
 
 class Klasifikasi extends BaseController
 {
-    protected $klasifikasiModel, $db, $builder;
+    protected $klasifikasiModel, $db, $builder, $bukuModel;
 
     public function __construct()
     {
         $this->klasifikasiModel = new KlasifikasiModel();
         $this->db = \Config\Database::connect();
         $this->builder = $this->db->table('klasifikasi');
+        $this->bukuModel = new BukuModel();
     }
 
     public function index()
@@ -134,5 +136,21 @@ class Klasifikasi extends BaseController
             $msg['flashData'] = 'Data klasifikasi berhasil dihapus.';
             echo json_encode($msg);
         }
+    }
+
+    public function detail($id = 0)
+    {
+        $data['title'] = 'Klasifikasi Buku';
+        // $data['buku'] = $this->bukuModel->find($id);
+        $data['datas'] = $this->bukuModel->builder()->select('judul, isbn')->where('idklas', $id)->get()->getResultArray();
+        // Get Data Klasifikasi from this id
+        // $idkls = $data['buku']['idklas'];
+        // $data['klas'] = $this->klasifikasiModel->find($idkls);
+        $data['klas'] = $this->klasifikasiModel->find($id);
+        // dd($data);
+        // if (empty($data['buku'])) {
+        //     return redirect()->to(base_url('buku'));
+        // }
+        return view('klasifikasi/detail', $data);
     }
 }

@@ -1,6 +1,19 @@
 <?= $this->extend('templates/index'); ?>
 <?= $this->section('page-content'); ?>
 
+<div class="row my-3 mx-1">
+    <div class="col pb-0">
+        <div class="alert alert-breadcrumb-ave mb-0" role="alert">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 fs-6">
+                    <li class="breadcrumb-item"><a class="a-bread-ave" href="<?= base_url('buku'); ?>">Buku</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detail</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row my-2">
         <div class="col">
@@ -142,12 +155,12 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col text-center">
-                                <a href="<?= base_url('buku'); ?>" class="btn btn-dark fw-bold">
+                                <a href="<?php // echo base_url('buku'); ?>" class="btn btn-dark fw-bold">
                                     <i class="fa-solid fa-fw fa-arrow-left"></i> Kembali ke Daftar Buku</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

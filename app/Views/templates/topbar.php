@@ -1,7 +1,7 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-alphlib">
     <!-- Navbar Brand-->
     <i class="fa-solid fa-fw fa-book fa-2x mx-3"></i>
-    <a class="navbar-brand ps-1" href="#">AlphaLibrary</a>
+    <a class="navbar-brand ps-1" href="<?= base_url('/'); ?>">AlphaLibrary</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fa-solid fa-bars"></i></button>
